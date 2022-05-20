@@ -1,11 +1,11 @@
-import { Status } from '../task.constant';
 import { ITask } from '../task.interface';
+import { TaskStatus } from '../task.constant';
 
 export class GetTaskResponseDto implements ITask {
-  id: number;
+  id: string;
   name: string;
   description: string;
-  status: Status;
+  status: TaskStatus;
   createdAt: Date;
   updatedAt: Date;
 }

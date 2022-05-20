@@ -1,8 +1,7 @@
-export enum Status {
+export enum TaskStatus {
   TODO = 'TODO',
   IN_PROGRESS = 'IN_PROGRESS',
   DONE = 'DONE',
-  REOPEN = 'REOPEN',
 }
 
 export enum TaskMessage {

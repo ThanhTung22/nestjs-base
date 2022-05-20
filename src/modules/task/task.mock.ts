@@ -1,16 +1,18 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { CreateTaskDto } from './dtos/create-task.dto';
-import { GetTaskDto, GetTasksResponseDto } from './dtos/get-tasks.dto';
-import { Status } from './task.constant';
+import { GetTaskRequestDto } from './dtos/get-task-request.dto';
+import { TaskStatus, TaskMessage } from './task.constant';
 import { ITask } from './task.interface';
+import { uuid } from '../../common/utils/comon.util';
+import { GetPageTaskResponseDto } from './dtos/get-page-task-response.dto';
 
 const date = new Date();
 
 export const mockTask: ITask = {
-  id: 1,
+  id: uuid(),
   name: 'name',
   description: 'description',
-  status: Status.TODO,
+  status: TaskStatus.TODO,
   createdAt: date,
   updatedAt: date,
 };
@@ -20,14 +22,14 @@ export const mockCreateTaskDto: CreateTaskDto = {
   description: 'description',
 };
 
-export const mockGetTaskDto: GetTaskDto = {
+export const mockGetTaskDto: GetTaskRequestDto = {
   page: 1,
   limit: 10,
   search: 'name',
-  status: Status.TODO,
+  status: TaskStatus.TODO,
 };
 
-export const mockGetTaskResponseDto: GetTasksResponseDto = {
+export const mockGetTaskResponseDto: GetPageTaskResponseDto = {
   page: 1,
   limit: 10,
   total: 100,
@@ -40,6 +42,6 @@ export const mockFindAndCountRes = [
 ];
 
 export const mockNotFoundException = new HttpException(
-  { key: 'cat.NOT_FOUND' },
+  { key: TaskMessage.NOT_FOUND },
   HttpStatus.NOT_FOUND,
 );

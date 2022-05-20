@@ -1,7 +1,7 @@
 import { Params } from 'nestjs-pino';
 import { Environment } from '../constants/common.constant';
 
-export const pinoLoggerConfiguration: Params = {
+export const pinoLoggerConfig: Params = {
   pinoHttp: {
     autoLogging: false,
     transport:

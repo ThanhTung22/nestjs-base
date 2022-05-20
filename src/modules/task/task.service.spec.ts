@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { getLoggerToken } from 'nestjs-pino';
-import { Task } from './task.entity';
+import { TaskEntity } from './task.entity';
 import {
   mockTask,
   mockCreateTaskDto,
@@ -31,7 +31,7 @@ describe('TaskService', () => {
       providers: [
         TaskService,
         { provide: HttpService, useValue: mockHttpService },
-        { provide: getRepositoryToken(Task), useValue: mockRepository },
+        { provide: getRepositoryToken(TaskEntity), useValue: mockRepository },
         { provide: getLoggerToken(TaskService.name), useValue: mockLogger },
       ],
     }).compile();

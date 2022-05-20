@@ -1,20 +1,17 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-function getBoolean(value: string): boolean {
-  try {
-    return Boolean(JSON.parse(value));
-  } catch {
-    throw new Error(value + ' is not a boolean');
-  }
-}
-
-export const databaseConfiguration: TypeOrmModuleOptions = {
+export const databaseConfig: TypeOrmModuleOptions = {
   type: 'postgres',
   host: process.env.DB_HOST,
-  port: +process.env.DB_PORT,
+  port: Number(process.env.DB_PORT),
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  entities: ['./dist/**/*.entity{.ts,.js}'],
-  synchronize: getBoolean(process.env.DB_SYNCHRONIZE),
+  subscribers: ['./dist/modules/**/*.subscriber{.ts,.js}'],
+  entities: ['./dist/modules/**/*.entity{.ts,.js}'],
+  migrations: ['./dist/database/migrations/*{.ts,.js}'],
+  synchronize: false,
+  keepConnectionAlive: true,
+  migrationsRun: true,
+  logging: 'all',
 };

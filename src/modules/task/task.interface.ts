@@ -1,8 +1,8 @@
-import { IEssentialProperties } from '../../common/interfaces/common.interface';
-import { Status } from './task.constant';
+import { IAudit } from '../../common/base/interfaces/audit.interface';
+import { TaskStatus } from './task.constant';
 
-export interface ITask extends IEssentialProperties {
+export interface ITask extends IAudit {
   name: string;
   description: string;
-  status: Status;
+  status: TaskStatus;
 }

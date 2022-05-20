@@ -2,13 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsDefined, IsOptional, IsPositive, IsString } from 'class-validator';
 
-export class CommonPaginationResponseDto {
-  total: number;
-  page: number;
-  limit: number;
-}
-
-export class CommonPaginationDto {
+export class PageRequestDto {
   @ApiProperty({ default: 1 })
   @Type(() => Number)
   @IsPositive()

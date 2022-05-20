@@ -1,3 +1,21 @@
+---
+to: "src/modules/<%= h.fileName(name) %>/<%= h.controllerFileName(name) %>.ts"
+unless_exists: true
+skip_if: <%= !blocks.includes('controller') %>
+---
+<%
+ fileName = h.fileName(name);
+ serviceFileName = h.serviceFileName(name);
+ createDtoFileName = h.createDtoFileName(name);
+ getRequestDtoFileName = h.getRequestDtoFileName(name);
+ updateDtoFileName = h.updateDtoFileName(name);
+ getPageResponseDtoFileName = h.getPageResponseDtoFileName(name);
+%>
+<%
+ CreateDtoName = h.createDtoClassName(name);
+%>
+
+
 import {
   Body,
   Controller,
@@ -7,16 +25,16 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { UUIDParam } from '../../common/decorators/http.decorator';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dtos/create-task.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { GetTaskRequestDto } from './dtos/get-task-request.dto';
 import { UpdateTaskDto } from './dtos/update-task.dto';
-import { UUIDParam } from '../../common/decorators/http.decorator';
 import { GetTaskResponseDto } from './dtos/get-task-response.dto';
 import { GetPageTaskResponseDto } from './dtos/get-page-task-response.dto';
 
-@ApiTags('tasks')
+@ApiTags('<%= fileName %>s')
 @Controller('tasks')
 export class TaskController {
   constructor(private readonly tasksService: TaskService) {}
@@ -51,3 +69,4 @@ export class TaskController {
     return this.tasksService.remove(id);
   }
 }
+
