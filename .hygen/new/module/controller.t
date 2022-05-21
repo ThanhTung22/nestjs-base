@@ -9,10 +9,19 @@ skip_if: <%= !blocks.includes('controller') %>
  createDtoFileName = h.createDtoFileName(name);
  getRequestDtoFileName = h.getRequestDtoFileName(name);
  updateDtoFileName = h.updateDtoFileName(name);
+ getResponseDtoFileName = h.getResponseDtoFileName(name);
  getPageResponseDtoFileName = h.getPageResponseDtoFileName(name);
 %>
 <%
- CreateDtoName = h.createDtoClassName(name);
+ serviceClassName = h.serviceClassName(name);
+ createDtoClassName = h.createDtoClassName(name);
+ getRequestDtoClassName = h.getRequestDtoClassName(name);
+ updateDtoClassName = h.updateDtoClassName(name);
+ getResponseDtoClassName = h.getResponseDtoClassName(name);
+ getPageResponseDtoClassName = h.getPageResponseDtoClassName(name);
+
+ controllerClassName = h.controllerClassName(name);
+ serviceVariableName = h.serviceVariableName(name);
 %>
 
 
@@ -27,46 +36,46 @@ import {
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UUIDParam } from '../../common/decorators/http.decorator';
-import { TaskService } from './task.service';
-import { CreateTaskDto } from './dtos/create-task.dto';
-import { GetTaskRequestDto } from './dtos/get-task-request.dto';
-import { UpdateTaskDto } from './dtos/update-task.dto';
-import { GetTaskResponseDto } from './dtos/get-task-response.dto';
-import { GetPageTaskResponseDto } from './dtos/get-page-task-response.dto';
+import { <%= serviceClassName %> } from './<%= serviceFileName %>';
+import { <%= createDtoClassName %> } from './dtos/<%= createDtoFileName %>';
+import { <%= getRequestDtoClassName %> } from './dtos/<%= getRequestDtoFileName %>';
+import { <%= updateDtoClassName %> } from './dtos/<%= updateDtoFileName %>';
+import { <%= getResponseDtoClassName %> } from './dtos/<%= getResponseDtoFileName %>';
+import { <%= getPageResponseDtoClassName %> } from './dtos/<%= getPageResponseDtoFileName %>';
 
 @ApiTags('<%= fileName %>s')
-@Controller('tasks')
-export class TaskController {
-  constructor(private readonly tasksService: TaskService) {}
+@Controller('<%= fileName %>s')
+export class <%= controllerClassName %> {
+  constructor(private readonly <%= serviceVariableName %>: <%= serviceClassName %>) {}
 
   @Post()
-  @ApiCreatedResponse({ type: GetTaskResponseDto })
-  create(@Body() dto: CreateTaskDto) {
-    return this.tasksService.create(dto);
+  @ApiCreatedResponse({ type: <%= getResponseDtoClassName %> })
+  create(@Body() dto: <%= createDtoClassName %>) {
+    return this.<%= serviceVariableName %>.create(dto);
   }
 
   @Get()
-  @ApiOkResponse({ type: GetPageTaskResponseDto })
-  findAll(@Query() request: GetTaskRequestDto) {
-    return this.tasksService.findAll(request);
+  @ApiOkResponse({ type: <%= getPageResponseDtoClassName %> })
+  findAll(@Query() request: <%= getRequestDtoClassName %>) {
+    return this.<%= serviceVariableName %>.findAll(request);
   }
 
   @Get(':id')
-  @ApiOkResponse({ type: GetTaskResponseDto })
+  @ApiOkResponse({ type: <%= getResponseDtoClassName %> })
   findOne(@UUIDParam('id') id: string) {
-    return this.tasksService.findOne(id);
+    return this.<%= serviceVariableName %>.findOne(id);
   }
 
   @Patch(':id')
-  @ApiOkResponse({ type: GetTaskResponseDto })
-  update(@UUIDParam('id') id: string, @Body() dto: UpdateTaskDto) {
-    return this.tasksService.update(id, dto);
+  @ApiOkResponse({ type: <%= getResponseDtoClassName %> })
+  update(@UUIDParam('id') id: string, @Body() dto: <%= updateDtoClassName %>) {
+    return this.<%= serviceVariableName %>.update(id, dto);
   }
 
   @Delete(':id')
   @ApiOkResponse()
   remove(@UUIDParam('id') id: string) {
-    return this.tasksService.remove(id);
+    return this.<%= serviceVariableName %>.remove(id);
   }
 }
 

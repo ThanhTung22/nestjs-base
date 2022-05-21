@@ -19,6 +19,9 @@ module.exports = {
         updateDtoClassName(name) {
             return `Update${this.className(name)}Dto`;
         },
+        constantClassName(name) {
+            return `${this.className(name)}Constant`;
+        },
         controllerClassName(name) {
             return `${this.className(name)}Controller`;
         },
@@ -56,6 +59,9 @@ module.exports = {
         updateDtoFileName(name) {
             return `update-${this.fileName(name)}.dto`;
         },
+        constantFileName(name) {
+            return `${this.fileName(name)}.constant`;
+        },
         controllerFileName(name) {
             return `${this.fileName(name)}.controller`;
         },
@@ -76,6 +82,13 @@ module.exports = {
         },
         serviceFileName(name) {
             return `${this.fileName(name)}.service`;
+        },
+
+        /**
+         * Variable name
+         * */
+        serviceVariableName(name) {
+            return `${this.variableName(name)}Service`;
         },
 
         /**

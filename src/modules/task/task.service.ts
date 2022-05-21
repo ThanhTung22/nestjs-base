@@ -23,9 +23,9 @@ export class TaskService {
     private readonly httpService: HttpService,
   ) {}
 
-  async create(createTaskDto: CreateTaskDto): Promise<ITask> {
-    this.logger.info({ createTaskDto });
-    return this.repository.save(createTaskDto);
+  async create(dto: CreateTaskDto): Promise<ITask> {
+    this.logger.info({ dto });
+    return this.repository.save(dto);
   }
 
   async findAll(request: GetTaskRequestDto): Promise<IPagination<ITask>> {
@@ -40,7 +40,7 @@ export class TaskService {
       whereConditions.status = TaskStatus.TODO;
     }
 
-    const [tasks, total] = <[TaskEntity[], number]>(
+    const [data, total] = <[TaskEntity[], number]>(
       await this.repository.findAndCount({
         take: limit,
         skip: calculateSkipPagination(page, limit),
@@ -49,7 +49,7 @@ export class TaskService {
     );
 
     return {
-      data: tasks,
+      data,
       total,
       page,
       limit,

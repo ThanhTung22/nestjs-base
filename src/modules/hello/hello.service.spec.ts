@@ -2,19 +2,19 @@ import { HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { getLoggerToken } from 'nestjs-pino';
-import { TaskEntity } from './task.entity';
+import { HelloEntity } from './hello.entity';
 import {
-  mockTask,
-  mockCreateTaskDto,
-  mockGetPageTaskResponseDto,
-  mockGetTaskRequestDto,
+  mockHello,
+  mockCreateHelloDto,
+  mockGetPageHelloResponseDto,
+  mockGetHelloRequestDto,
   mockFindAndCountRes,
   mockNotFoundException,
-} from './task.mock';
-import { TaskService } from './task.service';
+} from './hello.mock';
+import { HelloService } from './hello.service';
 
-describe('TaskService', () => {
-  let service: TaskService;
+describe('HelloService', () => {
+  let service: HelloService;
   const mockHttpService = {};
   const mockRepository = {
     save: jest.fn(),
@@ -29,46 +29,46 @@ describe('TaskService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        TaskService,
+        HelloService,
         { provide: HttpService, useValue: mockHttpService },
-        { provide: getRepositoryToken(TaskEntity), useValue: mockRepository },
-        { provide: getLoggerToken(TaskService.name), useValue: mockLogger },
+        { provide: getRepositoryToken(HelloEntity), useValue: mockRepository },
+        { provide: getLoggerToken(HelloService.name), useValue: mockLogger },
       ],
     }).compile();
 
-    service = module.get<TaskService>(TaskService);
+    service = module.get<HelloService>(HelloService);
   });
 
   describe('create', () => {
     it('should be successful', async () => {
-      mockRepository.save.mockResolvedValue(mockTask);
-      const result = await service.create(mockCreateTaskDto);
+      mockRepository.save.mockResolvedValue(mockHello);
+      const result = await service.create(mockCreateHelloDto);
 
-      expect(result.id).toEqual(mockTask.id);
+      expect(result.id).toEqual(mockHello.id);
     });
   });
 
   describe('findAll', () => {
     it('should be successful', async () => {
       mockRepository.findAndCount.mockResolvedValue(mockFindAndCountRes);
-      const result = await service.findAll(mockGetTaskRequestDto);
+      const result = await service.findAll(mockGetHelloRequestDto);
 
-      expect(result.total).toEqual(mockGetPageTaskResponseDto.total);
+      expect(result.total).toEqual(mockGetPageHelloResponseDto.total);
     });
   });
 
   describe('findOne', () => {
     it('should be successful', async () => {
-      mockRepository.findOne.mockResolvedValue(mockTask);
-      const result = await service.findOne(mockTask.id);
+      mockRepository.findOne.mockResolvedValue(mockHello);
+      const result = await service.findOne(mockHello.id);
 
-      expect(result.id).toEqual(mockTask.id);
+      expect(result.id).toEqual(mockHello.id);
     });
 
     it('should be throw NotFoundException', async () => {
       mockRepository.findOne.mockResolvedValue(undefined);
 
-      await expect(service.findOne(mockTask.id)).rejects.toThrow(
+      await expect(service.findOne(mockHello.id)).rejects.toThrow(
         mockNotFoundException,
       );
     });

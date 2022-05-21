@@ -22,21 +22,28 @@ const list = [
     'getRequestDto',
     'getResponseDto',
     'updateDto',
+    'constant',
     'controller',
     'entity',
     'interface',
     'mock',
-    'module',
     'serviceSpec',
     'service',
 ]
 
 const initial = [
     'createDto',
-    // 'getPageResponseDto',
-    // 'getRequestDto',
-    // 'getResponseDto',
-    // 'updateDto'
+    'getPageResponseDto',
+    'getRequestDto',
+    'getResponseDto',
+    'updateDto',
+    'constant',
+    'controller',
+    'entity',
+    'interface',
+    'mock',
+    'serviceSpec',
+    'service',
 ]
 
 module.exports = {

@@ -22,14 +22,14 @@ export const mockCreateTaskDto: CreateTaskDto = {
   description: 'description',
 };
 
-export const mockGetTaskDto: GetTaskRequestDto = {
+export const mockGetTaskRequestDto: GetTaskRequestDto = {
   page: 1,
   limit: 10,
   search: 'name',
   status: TaskStatus.TODO,
 };
 
-export const mockGetTaskResponseDto: GetPageTaskResponseDto = {
+export const mockGetPageTaskResponseDto: GetPageTaskResponseDto = {
   page: 1,
   limit: 10,
   total: 100,
@@ -37,8 +37,8 @@ export const mockGetTaskResponseDto: GetPageTaskResponseDto = {
 };
 
 export const mockFindAndCountRes = [
-  mockGetTaskResponseDto.data,
-  mockGetTaskResponseDto.total,
+  mockGetPageTaskResponseDto.data,
+  mockGetPageTaskResponseDto.total,
 ];
 
 export const mockNotFoundException = new HttpException(

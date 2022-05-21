@@ -10,7 +10,7 @@ export const databaseConfig: TypeOrmModuleOptions = {
   subscribers: ['./dist/modules/**/*.subscriber{.ts,.js}'],
   entities: ['./dist/modules/**/*.entity{.ts,.js}'],
   migrations: ['./dist/database/migrations/*{.ts,.js}'],
-  synchronize: false,
+  synchronize: true,
   keepConnectionAlive: true,
   migrationsRun: true,
   logging: 'all',

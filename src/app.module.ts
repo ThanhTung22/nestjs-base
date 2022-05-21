@@ -9,6 +9,7 @@ import { TaskModule } from './modules/task/task.module';
 import { i18nConfig } from './common/configs/i18n.config';
 import { pinoLoggerConfig } from './common/configs/pino-logger.config';
 import { databaseConfig } from './common/configs/database.config';
+import { HelloModule } from './modules/hello/hello.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { databaseConfig } from './common/configs/database.config';
     TypeOrmModule.forRoot(databaseConfig),
     LoggerModule.forRoot(pinoLoggerConfig),
     TaskModule,
+    HelloModule,
   ],
   controllers: [AppController],
   providers: [{ provide: APP_FILTER, useClass: I18nExceptionFilter }],

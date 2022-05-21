@@ -29,3 +29,10 @@ yarn start:dev
 ```bash
 yarn test
 ```
+
+## Generate new module
+
+```bash
+yarn generate
+# then input module name => select components => done
+```
