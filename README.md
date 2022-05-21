@@ -35,4 +35,5 @@ yarn test
 ```bash
 yarn generate
 # then input module name => select components => done
+# don't forget to import module to AppModule
 ```
