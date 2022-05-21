@@ -26,7 +26,6 @@ import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { FindConditions, ILike, Repository } from 'typeorm';
 import { calculateSkipPagination } from '../../common/utils/pagination.util';
 import { IPagination } from '../../common/base/interfaces/pagination.interface';
-import { dayjs } from '../../common/utils/dayjs.util';
 
 import { <%= createDtoClassName %> } from './dtos/<%= createDtoFileName %>';
 import { <%= getRequestDtoClassName %> } from './dtos/<%= getRequestDtoFileName %>';
@@ -73,7 +72,7 @@ export class <%= serviceClassName %> {
     };
   }
 
-  async findOne(id: string): Promise<<%= entityClassName %>> {
+  async findOne(id: string): Promise<<%= interfaceClassName %>> {
     const entity: <%= entityClassName %> = await this.repository.findOne({ id });
 
     if (!entity) {
