@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: nestjs-base
+      POSTGRES_DB: boost-base
     ports:
       - 5432:5432
     volumes:
