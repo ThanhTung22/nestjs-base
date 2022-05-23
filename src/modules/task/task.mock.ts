@@ -5,6 +5,7 @@ import { TaskStatus, TaskMessage } from './task.constant';
 import { ITask } from './task.interface';
 import { uuid } from '../../common/utils/comon.util';
 import { GetPageTaskResponseDto } from './dtos/get-page-task-response.dto';
+import { UpdateTaskDto } from './dtos/update-task.dto';
 
 const date = new Date();
 
@@ -45,3 +46,9 @@ export const mockNotFoundException = new HttpException(
   { key: TaskMessage.NOT_FOUND },
   HttpStatus.NOT_FOUND,
 );
+
+export const mockUpdateTaskDto: UpdateTaskDto = {
+  name: 'name update',
+  description: 'description update',
+  status: TaskStatus.DONE,
+};

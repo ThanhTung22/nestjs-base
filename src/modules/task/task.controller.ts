@@ -47,7 +47,7 @@ export class TaskController {
 
   @Delete(':id')
   @ApiOkResponse()
-  remove(@UUIDParam('id') id: string) {
-    return this.tasksService.remove(id);
+  delete(@UUIDParam('id') id: string) {
+    return this.tasksService.delete(id);
   }
 }

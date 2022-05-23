@@ -69,30 +69,16 @@ export class TaskService {
     return task;
   }
 
-  async update(id: string, dto: UpdateTaskDto): Promise<ITask> {
-    const exist: TaskEntity = await this.repository.findOne({ id });
+  async update(id: string, dto: UpdateTaskDto): Promise<void> {
+    await this.findOne(id);
 
-    if (!exist) {
-      throw new HttpException(
-        { key: TaskMessage.NOT_FOUND, args: { id } },
-        HttpStatus.NOT_FOUND,
-      );
-    }
-
-    return this.repository.save({ ...dto, id });
+    await this.repository.update({ id }, dto);
   }
 
-  async remove(id: string): Promise<void> {
-    const exist: ITask = await this.repository.findOne({ id });
+  async delete(id: string): Promise<void> {
+    await this.findOne(id);
 
-    if (!exist) {
-      throw new HttpException(
-        { key: TaskMessage.NOT_FOUND, args: { id } },
-        HttpStatus.NOT_FOUND,
-      );
-    }
-
-    await this.repository.remove(exist);
+    await this.repository.delete({ id });
   }
 
   /**
