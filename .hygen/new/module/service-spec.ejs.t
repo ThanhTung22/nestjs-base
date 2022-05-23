@@ -26,8 +26,9 @@ import {
   mock<%= createDtoClassName %>,
   mock<%= getPageResponseDtoClassName %>,
   mock<%= getRequestDtoClassName %>,
-  mockFindAndCountRes,
-  mockNotFoundException,
+  mock<%= updateDtoClassName %>,
+  mockFindAndCount<%= className %>,
+  mock<%= className %>NotFoundException,
 } from './<%= mockFileName %>';
 import { <%= serviceClassName %> } from './<%= serviceFileName %>';
 
@@ -38,6 +39,8 @@ describe('<%= serviceClassName %>', () => {
     save: jest.fn(),
     findAndCount: jest.fn(),
     findOne: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
   };
   const mockLogger = {
     info: jest.fn(),
@@ -68,7 +71,7 @@ describe('<%= serviceClassName %>', () => {
 
   describe('findAll', () => {
     it('should be successful', async () => {
-      mockRepository.findAndCount.mockResolvedValue(mockFindAndCountRes);
+      mockRepository.findAndCount.mockResolvedValue(mockFindAndCount<%= className %>);
       const result = await service.findAll(mock<%= getRequestDtoClassName %>);
 
       expect(result.total).toEqual(mock<%= getPageResponseDtoClassName %>.total);
@@ -87,8 +90,28 @@ describe('<%= serviceClassName %>', () => {
       mockRepository.findOne.mockResolvedValue(undefined);
 
       await expect(service.findOne(mock<%= className %>.id)).rejects.toThrow(
-        mockNotFoundException,
+        mock<%= className %>NotFoundException,
       );
+    });
+  });
+
+  describe('update', () => {
+    it('should be successful', async () => {
+      mockRepository.findOne.mockResolvedValue(mock<%= className %>);
+      const mockUpdateFunction = jest.spyOn(service, 'update');
+      await service.update(mock<%= className %>.id, mock<%= updateDtoClassName %>);
+
+      expect(mockUpdateFunction).toBeCalledWith(mock<%= className %>.id, mock<%= updateDtoClassName %>);
+    });
+  });
+
+  describe('delete', () => {
+    it('should be successful', async () => {
+      mockRepository.findOne.mockResolvedValue(mock<%= className %>);
+      const mockDeleteFunction = jest.spyOn(service, 'delete');
+      await service.delete(mock<%= className %>.id);
+
+      expect(mockDeleteFunction).toBeCalledWith(mock<%= className %>.id);
     });
   });
 });

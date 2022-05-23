@@ -7,7 +7,6 @@ skip_if: <%= !blocks.includes('getPageResponseDto') %>
  getResponseDtoFileName = h.getResponseDtoFileName(name);
 %>
 <%
- getResponseDtoFileName = h.getResponseDtoFileName(name);
  getResponseDtoClassName = h.getResponseDtoClassName(name);
  getPageResponseDtoClassName = h.getPageResponseDtoClassName(name);
 %>

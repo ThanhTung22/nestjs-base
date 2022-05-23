@@ -50,13 +50,13 @@ export class <%= serviceClassName %> {
 
   async findAll(request: <%= getRequestDtoClassName %>): Promise<IPagination<<%= interfaceClassName %>>> {
     const { limit, page, search } = request;
-    const whereConditions: FindConditions<<%= entityClassName %>> = {};
+    const whereConditions: FindConditions<<%= interfaceClassName %>> = {};
 
     if (search) {
       whereConditions.title = ILike(`%${search}%`);
     }
 
-    const [data, total] = <[<%= entityClassName %>[], number]>(
+    const [data, total] = <[<%= interfaceClassName %>[], number]>(
       await this.repository.findAndCount({
         take: limit,
         skip: calculateSkipPagination(page, limit),
@@ -73,7 +73,7 @@ export class <%= serviceClassName %> {
   }
 
   async findOne(id: string): Promise<<%= interfaceClassName %>> {
-    const entity: <%= entityClassName %> = await this.repository.findOne({ id });
+    const entity: <%= interfaceClassName %> = await this.repository.findOne({ id });
 
     if (!entity) {
       throw new HttpException(
@@ -85,29 +85,15 @@ export class <%= serviceClassName %> {
     return entity;
   }
 
-  async update(id: string, dto: <%= updateDtoClassName %>): Promise<<%= interfaceClassName %>> {
-    const exist: <%= entityClassName %> = await this.repository.findOne({ id });
+  async update(id: string, dto: <%= updateDtoClassName %>): Promise<void> {
+    await this.findOne(id);
 
-    if (!exist) {
-      throw new HttpException(
-        { key: <%= constantClassName %>.NOT_FOUND, args: { id } },
-        HttpStatus.NOT_FOUND,
-      );
-    }
-
-    return this.repository.save({ ...dto, id });
+    await this.repository.update({ id }, dto);
   }
 
-  async remove(id: string): Promise<void> {
-    const exist: <%= interfaceClassName %> = await this.repository.findOne({ id });
+  async delete(id: string): Promise<void> {
+    await this.findOne(id);
 
-    if (!exist) {
-      throw new HttpException(
-        { key: <%= constantClassName %>.NOT_FOUND, args: { id } },
-        HttpStatus.NOT_FOUND,
-      );
-    }
-
-    await this.repository.remove(exist);
+    await this.repository.delete({ id });
   }
 }

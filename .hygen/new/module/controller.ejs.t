@@ -21,7 +21,7 @@ skip_if: <%= !blocks.includes('controller') %>
  getPageResponseDtoClassName = h.getPageResponseDtoClassName(name);
 
  controllerClassName = h.controllerClassName(name);
- serviceVariableName = h.serviceVariableName(name);
+ entityPluralName = h.entityPluralName(name);
 %>
 
 
@@ -43,39 +43,39 @@ import { <%= updateDtoClassName %> } from './dtos/<%= updateDtoFileName %>';
 import { <%= getResponseDtoClassName %> } from './dtos/<%= getResponseDtoFileName %>';
 import { <%= getPageResponseDtoClassName %> } from './dtos/<%= getPageResponseDtoFileName %>';
 
-@ApiTags('<%= fileName %>s')
-@Controller('<%= fileName %>s')
+@ApiTags('<%= entityPluralName %>')
+@Controller('<%= entityPluralName %>')
 export class <%= controllerClassName %> {
-  constructor(private readonly <%= serviceVariableName %>: <%= serviceClassName %>) {}
+  constructor(private readonly service: <%= serviceClassName %>) {}
 
   @Post()
   @ApiCreatedResponse({ type: <%= getResponseDtoClassName %> })
   create(@Body() dto: <%= createDtoClassName %>) {
-    return this.<%= serviceVariableName %>.create(dto);
+    return this.service.create(dto);
   }
 
   @Get()
   @ApiOkResponse({ type: <%= getPageResponseDtoClassName %> })
   findAll(@Query() request: <%= getRequestDtoClassName %>) {
-    return this.<%= serviceVariableName %>.findAll(request);
+    return this.service.findAll(request);
   }
 
   @Get(':id')
   @ApiOkResponse({ type: <%= getResponseDtoClassName %> })
   findOne(@UUIDParam('id') id: string) {
-    return this.<%= serviceVariableName %>.findOne(id);
+    return this.service.findOne(id);
   }
 
   @Patch(':id')
-  @ApiOkResponse({ type: <%= getResponseDtoClassName %> })
+  @ApiOkResponse()
   update(@UUIDParam('id') id: string, @Body() dto: <%= updateDtoClassName %>) {
-    return this.<%= serviceVariableName %>.update(id, dto);
+    return this.service.update(id, dto);
   }
 
   @Delete(':id')
   @ApiOkResponse()
-  remove(@UUIDParam('id') id: string) {
-    return this.<%= serviceVariableName %>.remove(id);
+  delete(@UUIDParam('id') id: string) {
+    return this.service.delete(id);
   }
 }
 

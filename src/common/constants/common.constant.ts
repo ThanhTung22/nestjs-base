@@ -8,4 +8,4 @@ export enum Environment {
   PRODUCTION = 'production',
 }
 
-export const DEFAULT_UUID_VERSION = 4;
+export const DEFAULT_UUID_VERSION = '4';

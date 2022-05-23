@@ -5,11 +5,12 @@ skip_if: <%= !blocks.includes('entity') %>
 ---
 <%
  entityClassName = h.entityClassName(name);
+ entityPluralName = h.entityPluralName(name);
 %>
 import { Column, Entity } from 'typeorm';
 import { AuditEntity } from '../../common/base/entities/audit.entity';
 
-@Entity()
+@Entity({ name: '<%= entityPluralName %>' })
 export class <%= entityClassName %> extends AuditEntity {
   @Column()
   title: string;

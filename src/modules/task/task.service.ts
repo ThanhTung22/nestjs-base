@@ -4,14 +4,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { FindConditions, ILike, Repository } from 'typeorm';
 import { calculateSkipPagination } from '../../common/utils/pagination.util';
+import { IPagination } from '../../common/base/interfaces/pagination.interface';
+import { dayjs } from '../../common/utils/dayjs.util';
+
 import { CreateTaskDto } from './dtos/create-task.dto';
 import { GetTaskRequestDto } from './dtos/get-task-request.dto';
 import { TaskMessage, TaskStatus } from './task.constant';
 import { TaskEntity } from './task.entity';
 import { ITask } from './task.interface';
-import { dayjs } from '../../common/utils/dayjs.util';
 import { UpdateTaskDto } from './dtos/update-task.dto';
-import { IPagination } from '../../common/base/interfaces/pagination.interface';
 
 @Injectable()
 export class TaskService {
@@ -30,7 +31,7 @@ export class TaskService {
 
   async findAll(request: GetTaskRequestDto): Promise<IPagination<ITask>> {
     const { limit, page, search, status } = request;
-    const whereConditions: FindConditions<TaskEntity> = {};
+    const whereConditions: FindConditions<ITask> = {};
 
     if (search) {
       whereConditions.name = ILike(`%${search}%`);
@@ -40,12 +41,12 @@ export class TaskService {
       whereConditions.status = TaskStatus.TODO;
     }
 
-    const [data, total] = <[TaskEntity[], number]>(
-      await this.repository.findAndCount({
+    const [data, total] = <[ITask[], number]>await this.repository.findAndCount(
+      {
         take: limit,
         skip: calculateSkipPagination(page, limit),
         where: whereConditions,
-      })
+      },
     );
 
     return {
@@ -56,17 +57,17 @@ export class TaskService {
     };
   }
 
-  async findOne(id: string): Promise<TaskEntity> {
-    const task: TaskEntity = await this.repository.findOne({ id });
+  async findOne(id: string): Promise<ITask> {
+    const entity: ITask = await this.repository.findOne({ id });
 
-    if (!task) {
+    if (!entity) {
       throw new HttpException(
         { key: TaskMessage.NOT_FOUND, args: { id } },
         HttpStatus.NOT_FOUND,
       );
     }
 
-    return task;
+    return entity;
   }
 
   async update(id: string, dto: UpdateTaskDto): Promise<void> {

@@ -1,3 +1,4 @@
+const pluralize = require('pluralize')
 module.exports = {
     templates: `${__dirname}/.hygen`,
     helpers: {
@@ -103,6 +104,8 @@ module.exports = {
         variableName(name) {
             return this.changeCase.camelCase(name);
         },
-
+        entityPluralName(name){
+            return pluralize(this.fileName(name))
+        }
     },
 }

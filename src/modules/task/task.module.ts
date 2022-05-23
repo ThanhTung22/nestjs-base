@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { HttpModule } from '@nestjs/axios';
+import { TaskEntity } from './task.entity';
 import { TaskService } from './task.service';
 import { TaskController } from './task.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { TaskEntity } from './task.entity';
-import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [TypeOrmModule.forFeature([TaskEntity]), HttpModule],

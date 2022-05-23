@@ -8,9 +8,9 @@ import {
   mockCreateTaskDto,
   mockGetPageTaskResponseDto,
   mockGetTaskRequestDto,
-  mockFindAndCountRes,
-  mockNotFoundException,
   mockUpdateTaskDto,
+  mockFindAndCountTask,
+  mockTaskNotFoundException,
 } from './task.mock';
 import { TaskService } from './task.service';
 
@@ -53,7 +53,7 @@ describe('TaskService', () => {
 
   describe('findAll', () => {
     it('should be successful', async () => {
-      mockRepository.findAndCount.mockResolvedValue(mockFindAndCountRes);
+      mockRepository.findAndCount.mockResolvedValue(mockFindAndCountTask);
       const result = await service.findAll(mockGetTaskRequestDto);
 
       expect(result.total).toEqual(mockGetPageTaskResponseDto.total);
@@ -72,7 +72,7 @@ describe('TaskService', () => {
       mockRepository.findOne.mockResolvedValue(undefined);
 
       await expect(service.findOne(mockTask.id)).rejects.toThrow(
-        mockNotFoundException,
+        mockTaskNotFoundException,
       );
     });
   });
@@ -90,10 +90,10 @@ describe('TaskService', () => {
   describe('delete', () => {
     it('should be successful', async () => {
       mockRepository.findOne.mockResolvedValue(mockTask);
-      const mockUpdateFunction = jest.spyOn(service, 'delete');
+      const mockDeleteFunction = jest.spyOn(service, 'delete');
       await service.delete(mockTask.id);
 
-      expect(mockUpdateFunction).toBeCalledWith(mockTask.id);
+      expect(mockDeleteFunction).toBeCalledWith(mockTask.id);
     });
   });
 });
