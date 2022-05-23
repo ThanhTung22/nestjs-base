@@ -49,7 +49,7 @@ module.exports = {
             return `create-${this.fileName(name)}.dto`;
         },
         getPageResponseDtoFileName(name) {
-            return `get-many-${this.fileName(name)}-page-response.dto`;
+            return `get-page-${this.fileName(name)}-page-response.dto`;
         },
         getRequestDtoFileName(name) {
             return `get-${this.fileName(name)}-request.dto`;
@@ -83,13 +83,6 @@ module.exports = {
         },
         serviceFileName(name) {
             return `${this.fileName(name)}.service`;
-        },
-
-        /**
-         * Variable name
-         * */
-        serviceVariableName(name) {
-            return `${this.variableName(name)}Service`;
         },
 
         /**
